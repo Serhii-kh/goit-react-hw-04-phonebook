@@ -1,0 +1,12 @@
+.contactsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 10px;
+  max-width: 400px;
+
+  outline: 1px solid lightslategray;
+  border-radius: 4px;
+  background-color: aliceblue;
+}

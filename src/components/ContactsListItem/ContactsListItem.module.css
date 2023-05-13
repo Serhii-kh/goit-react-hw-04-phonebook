@@ -1,0 +1,10 @@
+.ContactsListItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+}
+
+.ContactsListItem::not(:last-child) {
+	margin-bottom: 10px;
+}
