@@ -50,26 +50,28 @@ export const App = () => {
 	};
 
 	useEffect(() => {
-		const contacts = localStorage.getItem('contacts')
-		const parsedContacts = JSON.parse(contacts)
+		// const contacts = localStorage.getItem('contacts')
+		// const parsedContacts = JSON.parse(contacts)
 
 		// parsedContacts ? setContacts(parsedContacts) : setContacts(initialContacts)
 
-		if (parsedContacts) {
-			setContacts(parsedContacts)
-		}
+		// if (parsedContacts) {
+		// 	setContacts(parsedContacts)
+		// }
 
-		// localStorage.setItem('contacts', JSON.stringify(contacts))
+		localStorage.setItem('contacts', JSON.stringify(contacts))
 
-	}, [])
-
-	// useEffect(() => {
-	// localStorage.setItem('contacts', JSON.stringify(contacts))
-	// }, [contacts])
+	}, [contacts])
 
 	// useEffect(() => {
+	// 	const contacts = localStorage.getItem('contacts')
+	// 	const parsedContacts = JSON.parse(contacts)
 
-	// })
+	// 		if (parsedContacts) {
+	// 		setContacts(parsedContacts)
+	// 	}
+	// }, [])
+
 
 	// componentDidUpdate(prevProps, prevState) {
 	// 	const { contacts } = this.state
