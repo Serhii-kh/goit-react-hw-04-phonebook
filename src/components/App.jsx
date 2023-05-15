@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { useEffect, useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
@@ -6,19 +5,18 @@ import { Filter } from './Filter/Filter';
 import shortid from 'shortid';
 import css from '../components/wrapper/wrapper.module.css';
 
-export class App extends Component {
-	state = {
-		contacts: [
-			{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-			{ id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-			{ id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-			{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-		],
-		filter: '',
-	};
+const initialContacts = [
+	{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+	{ id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+	{ id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+	{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+]
 
-	addContact = (name, number) => {
-		const { contacts } = this.state;
+export const App = () => {
+	const [contacts, setContacts] = useState(initialContacts)
+	const [filter, setFilter] = useState('')
+
+	const addContact = (name, number) => {
 		const contact = {
 			name,
 			number,
@@ -30,34 +28,48 @@ export class App extends Component {
 				contact => contact.name.toLowerCase() === name.toLowerCase()
 			)) { alert(`${name} is already in contacts!`) }
 		else {
-			this.setState(prevState => ({
-				contacts: [...prevState.contacts, contact],
-			}));
+			setContacts(contacts => [...contacts, contact])
 		}
 	};
 
-	deleteContact = contactId => {
-		this.setState(prevState => ({
-			contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-		}));
+	const deleteContact = contactId => {
+		setContacts(contacts => contacts.filter(contact => contact.id !== contactId))
 	};
 
-	changeFilter = e => {
+	const changeFilter = e => {
 		const { value } = e.currentTarget;
-
-		this.setState({
-			filter: value,
-		});
+		setFilter(value)
 	};
 
-	getFilteredContacts = () => {
-		const { contacts, filter } = this.state;
+	const getFilteredContacts = () => {
 		const normalizedFilter = filter.toLowerCase();
 
 		return contacts.filter(contact =>
 			contact.name.toLowerCase().includes(normalizedFilter)
 		);
 	};
+
+	useEffect(() => {
+		const contacts = localStorage.getItem('contacts')
+		const parsedContacts = JSON.parse(contacts)
+
+		// parsedContacts ? setContacts(parsedContacts) : setContacts(initialContacts)
+
+		if (parsedContacts) {
+			setContacts(parsedContacts)
+		}
+
+		// localStorage.setItem('contacts', JSON.stringify(contacts))
+
+	}, [])
+
+	// useEffect(() => {
+	// localStorage.setItem('contacts', JSON.stringify(contacts))
+	// }, [contacts])
+
+	// useEffect(() => {
+
+	// })
 
 	// componentDidUpdate(prevProps, prevState) {
 	// 	const { contacts } = this.state
@@ -76,24 +88,28 @@ export class App extends Component {
 	// 			contacts: parsedContacts,
 	// 		})
 	// 	}
-
 	// }
 
-	render() {
-		const { filter } = this.state;
-		const filteredContacts = this.getFilteredContacts();
+	const filteredContacts = getFilteredContacts();
 
-		return (
-			<div className={css.phonebook}>
-				<h1>Phonebook</h1>
-				<ContactForm onFormSubmit={this.addContact} />
-				<h2>Contacts</h2>
-				<Filter value={filter} onChange={this.changeFilter} />
-				<ContactsList
-					contacts={filteredContacts}
-					onDeleteContact={this.deleteContact}
-				/>
-			</div>
-		);
-	}
+	return (
+		<div className={css.phonebook}>
+			<h1>Phonebook</h1>
+			<ContactForm onFormSubmit={addContact} />
+			<h2>Contacts</h2>
+			<Filter value={filter} onChange={changeFilter} />
+			<ContactsList
+				contacts={filteredContacts}
+				onDeleteContact={deleteContact}
+			/>
+		</div>
+	);
 }
+
+// [
+// 	{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+// 	{ id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+// 	{ id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+// 	{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+// ]
+

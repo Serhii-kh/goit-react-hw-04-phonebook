@@ -18,6 +18,7 @@ export const ContactForm = ({ onFormSubmit }) => {
 			case 'number':
 				setNumber(value)
 				break
+
 			default: return
 		}
 	}
@@ -27,10 +28,6 @@ export const ContactForm = ({ onFormSubmit }) => {
 
 		onFormSubmit(name, number)
 
-		resetForm()
-	}
-
-	const resetForm = () => {
 		setName('')
 		setNumber('')
 	}
