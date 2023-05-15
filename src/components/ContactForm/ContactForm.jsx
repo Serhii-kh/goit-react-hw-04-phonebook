@@ -3,7 +3,7 @@ import css from '../ContactForm/ContactForm.module.css';
 import PropTypes from 'prop-types';
 
 
-export const ContactForm = () => {
+export const ContactForm = ({ onFormSubmit }) => {
 	const [name, setName] = useState('')
 	const [number, setNumber] = useState('')
 
@@ -24,6 +24,8 @@ export const ContactForm = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
+
+		onFormSubmit(name, number)
 
 		resetForm()
 	}
