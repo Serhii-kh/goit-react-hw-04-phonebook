@@ -10,17 +10,9 @@ export const ContactForm = ({ onFormSubmit }) => {
 	const handleChange = e => {
 		const { name, value } = e.currentTarget;
 
-		switch (name) {
-			case 'name':
-				setName(value)
-				break
+		if (name === 'name') setName(value)
+		if (name === 'number') setNumber(value)
 
-			case 'number':
-				setNumber(value)
-				break
-
-			default: return
-		}
 	}
 
 	const handleSubmit = e => {

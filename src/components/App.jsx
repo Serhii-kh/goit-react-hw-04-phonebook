@@ -13,7 +13,7 @@ const initialContacts = [
 ]
 
 export const App = () => {
-	const [contacts, setContacts] = useState(initialContacts)
+	const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('contacts')) ?? initialContacts)
 	const [filter, setFilter] = useState('')
 
 	const addContact = (name, number) => {
@@ -50,47 +50,9 @@ export const App = () => {
 	};
 
 	useEffect(() => {
-		// const contacts = localStorage.getItem('contacts')
-		// const parsedContacts = JSON.parse(contacts)
-
-		// parsedContacts ? setContacts(parsedContacts) : setContacts(initialContacts)
-
-		// if (parsedContacts) {
-		// 	setContacts(parsedContacts)
-		// }
-
 		localStorage.setItem('contacts', JSON.stringify(contacts))
-
 	}, [contacts])
 
-	// useEffect(() => {
-	// 	const contacts = localStorage.getItem('contacts')
-	// 	const parsedContacts = JSON.parse(contacts)
-
-	// 		if (parsedContacts) {
-	// 		setContacts(parsedContacts)
-	// 	}
-	// }, [])
-
-
-	// componentDidUpdate(prevProps, prevState) {
-	// 	const { contacts } = this.state
-
-	// 	if (contacts !== prevState.contacts) {
-	// 		localStorage.setItem('contacts', JSON.stringify(contacts))
-	// 	}
-	// }
-
-	// componentDidMount() {
-	// 	const contacts = localStorage.getItem('contacts')
-	// 	const parsedContacts = JSON.parse(contacts)
-
-	// 	if (parsedContacts) {
-	// 		this.setState({
-	// 			contacts: parsedContacts,
-	// 		})
-	// 	}
-	// }
 
 	const filteredContacts = getFilteredContacts();
 
@@ -108,10 +70,4 @@ export const App = () => {
 	);
 }
 
-// [
-// 	{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-// 	{ id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-// 	{ id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-// 	{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-// ]
 
